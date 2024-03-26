@@ -1,15 +1,8 @@
 package com.Anudip.HibernateProject.SocialMedia_11;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import java.util.*;
 
+import javax.persistence.*;
 @Entity
 @Table(name = "posts")
 public class Post {
@@ -18,11 +11,22 @@ public class Post {
     private Long id;
 
     @Column(nullable = false)
-    private String title;
+    private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    // Constructors, getters, setters, and equals/hashcode
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+        name = "post_likes",
+        joinColumns = @JoinColumn(name = "post_id"),
+        inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> likedBy = new ArrayList<>();
+
+    // Constructors, getters, and setters
 }

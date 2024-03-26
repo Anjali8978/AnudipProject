@@ -1,16 +1,8 @@
 package com.Anudip.HibernateProject.SocialMedia_11;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
@@ -20,10 +12,16 @@ public class User {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String username;
+
+    @Column(nullable = false)
+    private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts = new ArrayList<>();
 
-    // Constructors, getters, setters, and equals/hashcode
+    @ManyToMany(mappedBy = "likedBy")
+    private List<Post> likedPosts = new ArrayList<>();
+
+    // Constructors, getters, and setters
 }

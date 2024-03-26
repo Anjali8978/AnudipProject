@@ -1,22 +1,13 @@
 package Service_Module;
 
-import javax.transaction.Transactional;
+import java.util.*;
 
 import com.Anudip.HibernateProject.SocialMedia_11.Post;
-import com.Anudip.HibernateProject.SocialMedia_11.PostDao;
+import com.Anudip.HibernateProject.SocialMedia_11.User;
 
-@Service
-@Transactional
-public class PostService {
-    private final PostDao postDao;
-
-    public PostService(PostDao postDao) {
-        this.postDao = postDao;
-    }
-
-    public void save(Post post) {
-        postDao.save(post);
-    }
-
-// Implement other CRUD methods
+public interface PostService {
+    void createPost(User user, String content);
+    void deletePost(Post post);
+    List<Post> getPostsByUser(User user);
+    Post getPostById(Long postId);
 }
